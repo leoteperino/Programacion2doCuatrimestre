@@ -8,59 +8,99 @@
  ============================================================================
  */
 
+/*Pedir dos numeros al usuario, verificar que sean numeros y no letras y
+ * hacer la suma, resta, multiplicacion y division de esos numeros*/
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdio_ext.h>
 
-int sumar(int a, int b, int *pResultado);
-int restar(int a, int b, int *pResultado);
-int multiplicacion(int a, int b, int *pResultado);
+int suma(float numero1, float numero2, float *pResultado);
+int resta(float numero1, float numero2, float *pResultado);
+int multiplicacion(float numero1, float numero2, float *pResultado);
+int division(float numero1, float numero2, float *pResultado);
 
-int main(void) {
-	int num1;
-	int num2;
-	int resultado;
-	int resultadoResta;
+int main(void)
+{
+	float numero1;
+	float numero2;
 	int resScanf;
+	float resultado;
 
-	do
+	printf("Ingrese un numero: ");
+	__fpurge(stdin);
+	resScanf = scanf("%f", &numero1);
+	while(resScanf == 0)
 	{
-		printf("Ingrese el numero 1: ");
+		printf("ERROR, usted no Ingreso un Número.\n");
+		printf("Ingrese un numero: ");
 		__fpurge(stdin);
-		resScanf = scanf("%d", &num1);
-	}while(resScanf == 0);
+		resScanf = scanf("%f", &numero1);
+	}
 
-	do
+	printf("Ingrese un numero: ");
+	__fpurge(stdin);
+	resScanf = scanf("%f", &numero2);
+	while(resScanf == 0)
 	{
-		printf("Ingrese el numero 2: ");
+		printf("ERROR, usted no Ingreso un Número.\n");
+		printf("Ingrese un numero: ");
 		__fpurge(stdin);
-		resScanf = scanf("%d", &num2);
-	}while(resScanf == 0);
+		resScanf = scanf("%f", &numero2);
+	}
 
-	sumar(num1, num2, &resultado);
-	restar(num1, num2, &resultadoResta);
-	//multiplicacion(num1, num2, &resultado);
-	printf("la suma es: %d", resultado);
-	printf("\nla resta es: %d", resultadoResta);
-	printf("\nla multiplicacion es: %d", resultado);
+	if (!suma(numero1, numero2, &resultado))
+	{
+		printf("\nSuma: %.f", resultado);
+	}
+
+	if (!resta(numero1, numero2, &resultado))
+	{
+		printf("\nResta: %.f", resultado);
+	}
+	if (!multiplicacion(numero1, numero2, &resultado))
+	{
+		printf("\nMultiplicacion: %.f", resultado);
+	}
+
+	if (!division(numero1, numero2, &resultado))
+	{
+		printf("\nDivision: %.2f", resultado);
+	}
+	else
+	{
+		printf("\nNo es posible dividir por el numero 0");
+	}
 
 	return EXIT_SUCCESS;
 }
 
-int sumar(int a, int b, int *pResultado)
+int suma(float numero1, float numero2, float *pResultado)
 {
-	*pResultado = a+b;
+	*pResultado = numero1 + numero2;
 	return 0;
 }
 
-int restar(int a, int b, int *pResultado)
+int resta(float numero1, float numero2, float *pResultado)
 {
-	*pResultado = a-b;
+	*pResultado = numero1 - numero2;
 	return 0;
 }
-//
-//int multiplicacion(int a, int b, int *pResultado)
-//{
-//	*pResultado = a*b;
-//	return 0;
-//}
+
+int multiplicacion(float numero1, float numero2, float *pResultado)
+{
+	*pResultado = numero1 * numero2;
+	return 0;
+}
+
+int division(float numero1, float numero2, float *pResultado)
+{
+	*pResultado = numero1 / numero2;
+	if(numero2 == 0)
+	{
+		return -1;
+	}
+	else
+	{
+		return 0;
+	}
+}
