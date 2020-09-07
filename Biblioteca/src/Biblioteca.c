@@ -22,7 +22,6 @@ int main(void)
 	int getInt;
 	float getFloat;
 	char getChar;
-	int respuestaScan;
 
 	if(!utn_getInt(&getInt,"Ingrese un numero entero: ", "ERROR", QTY_MIN, QTY_MAX, QTY_REINT))
 	{
@@ -46,7 +45,7 @@ int main(void)
 
 	printf("\n************************************************************************************\n");
 
-	if(!utn_getChar(&getChar, "Ingrese una letra: ", "ERROR", 'a', 'c', QTY_REINT))
+	if(!utn_getChar(&getChar, "Ingrese una letra: ", "ERROR", 'a', 'z', QTY_REINT))
 	{
 		printf("la letra ingresada es: %c", getChar);
 	}
@@ -56,10 +55,4 @@ int main(void)
 	}
 
 	printf("\n************************************************************************************\n");
-
-	printf("letra: ");
-	__fpurge(stdin);
-	respuestaScan = scanf("%c", &getChar);
-	printf("%d - %c", respuestaScan, getChar);
-	return EXIT_SUCCESS;
 }
