@@ -178,7 +178,8 @@ void utn_imprimirArrayInt(int Array[], int len)
  * \param Se pasa un puntero float que llevara el resultado
  * \param Se pasa el Array
  * \param Se pasa el largo del Array
- * \return Devielve -1 en casdo de no haber podido leer el Array, Devuelve 0 si esta todo OK
+ * \return Devulve -1 en caso de no haber podido leer el Array,
+ * 		   Devuelve 0 si esta OK
  */
 int utn_promedioArrayInt(int Array[], int len, float* pResultado)
 {
@@ -203,25 +204,114 @@ int utn_promedioArrayInt(int Array[], int len, float* pResultado)
  * \brief Funcion que calcula la suma de dos numeros y guarda su resultado en un puntero
  * \param Se pasa un numero flotante (primer operando)
  * \param Se pasa un numero flotante (segundo operando)
- * \return  Devuelve -1 en caso de no haber podido realizar la operacion }
+ * \param Se pasa un puntero a float con el resultado para poder escribirlo.
+ * \return  Devuelve -1 en caso de no haber podido realizar la operacion
  * 			Devuelve 0 si la operacion se realizo con exito.
  */
-int utn_suma(float num_a, float num_b,  float* pResultado)
+int utn_sumar(float num_a, float num_b,  float* pResultado)
 {
 	int retorno = -1;
-	float suma;
+	float bufferFloat;
 	if(pResultado!=NULL)
 	{
-		suma = num_a+num_b;
-		*pResultado=suma;
+		bufferFloat = num_a+num_b;
+		*pResultado=bufferFloat;
 		retorno = 0;
 	}
 	return retorno;
 }
 
+/*
+ * \brief Funcion que calcula la resta de dos numeros y guarda su resultado en un puntero
+ * \param Se pasa un numero flotante (primer operando)
+ * \param Se pasa un numero flotante (segundo operando)
+ * \param Se pasa un puntero a float con el resultado para poder escribirlo.
+ * \return  Devuelve -1 en caso de no haber podido realizar la operacion
+ * 			Devuelve 0 si la operacion se realizo con exito.
+ */
+int utn_restar(float num_a, float num_b,  float* pResultado)
+{
+	int retorno = -1;
+	float bufferFloat;
+	if(pResultado!=NULL)
+	{
+		bufferFloat = num_a-num_b;
+		*pResultado=bufferFloat;
+		retorno = 0;
+	}
+	return retorno;
+}
 
+/*
+ * \brief Funcion que calcula la division de dos numeros y guarda su resultado en un puntero
+ * \param Se pasa un numero flotante (primer operando)
+ * \param Se pasa un numero flotante (segundo operando)
+ * \param Se pasa un puntero a float con el resultado para poder escribirlo.
+ * \return  Devuelve -1 en caso de no haber podido realizar la operacion
+ * 			Devuelve -2 en caso de ser el segundo operando 0
+ * 			Devuelve 0 si la operacion se realizo con exito.
+ */
+int utn_dividir(float num_a, float num_b, float* pResultado)
+{
+	int retorno = -1;
+	float bufferFloat;
+	if(pResultado!=NULL)
+	{
+		bufferFloat = num_a/num_b;
+		if(num_b==0)
+		{
+			retorno = -2;
+		}
+		else
+		{
+			*pResultado = bufferFloat;
+			retorno = 0;
+		}
+	}
+	return retorno;
+}
 
+/*
+ * \brief Funcion que calcula la multiplicacion de dos numeros y guarda su resultado en un puntero
+ * \param Se pasa un numero flotante (primer operando)
+ * \param Se pasa un numero flotante (segundo operando)
+ * \param Se pasa un puntero a float con el resultado para poder escribirlo.
+ * \return  Devuelve -1 en caso de no haber podido realizar la operacion
+ * 			Devuelve 0 si la operacion se realizo con exito.
+ */
+int utn_multiplicar(float num_a, float num_b,  float* pResultado)
+{
+	int retorno = -1;
+	float bufferFloat;
+	if(pResultado!=NULL)
+	{
+		bufferFloat = num_a*num_b;
+		*pResultado=bufferFloat;
+		retorno = 0;
+	}
+	return retorno;
+}
 
+/*
+ * \brief Funcion que calcula el factorial de un numero y guarda su resultado en un puntero
+ * \param Se pasa un numero flotante
+ * \param Se pasa un puntero a long con el resultado para poder escribirlo.
+ * \return  Devuelve -1 en caso de no haber podido realizar la operacion
+ * 			Devuelve 0 si la operacion se realizo con exito.
+ */
+int utn_factorial(float num_a)
+{
+	int retorno;
+	if(num_a)
+	{
+		return 1;
+	}
+	else
+	{
+		retorno=num_a*utn_factorial(num_a-1);
+		return retorno;
+	}
+}
 
 
 

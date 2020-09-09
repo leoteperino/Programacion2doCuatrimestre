@@ -14,6 +14,10 @@ int utn_getChar(char* pResultado, char* pMensaje, char* pMensajeError, char min,
 void utn_cargandoArrayInt(int Array[], int len, int min, int max, int reintentos);
 void utn_imprimirArrayInt(int Array[], int len);
 int utn_promedioArrayInt(int Array[], int len, float* pResultado);
-int utn_suma(float num_a, float num_b,  float* pResultado);
+int utn_sumar(float num_a, float num_b,  float* pResultado);
+int utn_restar(float num_a, float num_b,  float* pResultado);
+int utn_dividir(float num_a, float num_b, float* pResultado);
+int utn_multiplicar(float num_a, float num_b,  float* pResultado);
+int utn_factorial(float num_a);
 
 #endif /* UTN_H_ */

@@ -22,6 +22,10 @@ int main(void) {
 	float num_a = 0;
 	float num_b = 0;
 	float resultadoSuma;
+	float resultadoResta;
+	float resultadoDivision;
+	float resultadoMultiplicacion;
+	int resultadoFactorial;
 	//Menu de Inicio
 	do{
 		printf( "--Menu de opciones--\n"
@@ -93,7 +97,8 @@ int main(void) {
 					case 3:
 						printf("\n*********************************************\n");
 						printf("--Opcion 3--\n");
-						if(!utn_suma(num_a, num_b, &resultadoSuma))
+
+						if(!utn_sumar(num_a, num_b, &resultadoSuma))
 						{
 							printf("a) La SUMA se realizo con exito\n");
 						}
@@ -101,14 +106,47 @@ int main(void) {
 						{
 							printf("a) No se pudo realizar la operacion SUMA\n");
 						}
-						printf( "Pare ver los resultados de las operaciones, \n"
+
+						if(!utn_restar(num_a, num_b, &resultadoResta))
+						{
+							printf("b) La RESTA se realizo con exito\n");
+						}
+						else
+						{
+							printf("b) No se pudo realizar la operacion RESTA\n");
+						}
+
+						if(utn_dividir(num_a, num_b, &resultadoDivision)==0)
+						{
+							printf("c) La DIVISION se realizo con exito\n");
+						}
+						else if(utn_dividir(num_a, num_b, &resultadoDivision)==-2)
+						{
+							printf("c) La DIVISION no se realizo, ningun numero es divisible por 0\n");
+						}
+						else
+						{
+							printf("C) No se pudo realizar la operacion DIVISION\n");
+						}
+
+						if(!utn_restar(num_a, num_b, &resultadoMultiplicacion))
+						{
+							printf("d) La MULTIPLICACION se realizo con exito\n");
+						}
+						else
+						{
+							printf("d) No se pudo realizar la operacion MULTIPLICACION\n");
+						}
+
+						printf( "Para ver los resultados de las operaciones, \n"
 								"Ingrese la Opcion 4 del Menu.\n");
 						printf("*********************************************\n\n");
 						break;
 					case 4:
 						printf("\n*********************************************\n");
 						printf("--Opcion 4--\n");
-						if(!utn_suma(num_a, num_b, &resultadoSuma))
+
+						if(!utn_sumar(num_a, num_b, &resultadoSuma))
 						{
 							printf(	"a) El resultado de %.2f + %.2f es: %.2f\n",
 									num_a,
@@ -119,6 +157,50 @@ int main(void) {
 						{
 							printf("No se pudo realizar la operacion SUMA\n");
 						}
+
+						if(!utn_restar(num_a, num_b, &resultadoResta))
+						{
+							printf(	"b) El resultado de %.2f - %.2f es: %.2f\n",
+									num_a,
+									num_b,
+									resultadoResta);
+						}
+						else
+						{
+							printf("b) No se pudo realizar la operacion RESTA\n");
+						}
+
+						if(utn_dividir(num_a, num_b, &resultadoDivision)==0)
+						{
+							printf("c) El resultado de %.2f/%.2f es: %.2f\n",
+									num_a,
+									num_b,
+									resultadoDivision);
+						}
+						else if(utn_dividir(num_a, num_b, &resultadoDivision)==-2)
+						{
+							printf("c) No es posible dividir por 0\n");
+						}
+						else
+						{
+							printf("C) No se pudo realizar la operacion DIVISION\n");
+						}
+
+						if(!utn_multiplicar(num_a, num_b, &resultadoMultiplicacion))
+						{
+							printf("d) El resultado de %.2f*%.2f es: %.2f\n",
+									num_a,
+									num_b,
+									resultadoMultiplicacion);
+						}
+						else
+						{
+							printf("d) No se pudo realizar la operacion MULTIPLICACION\n");
+						}
+
+						resultadoFactorial = utn_factorial(num_a);
+						printf("\n%d\n", resultadoFactorial);
+
 						printf("*********************************************\n\n");
 						break;
 					case 5:
