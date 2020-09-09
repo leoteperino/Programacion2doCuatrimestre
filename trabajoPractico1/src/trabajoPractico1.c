@@ -21,6 +21,7 @@ int main(void) {
 	int opcionesMenu;
 	float num_a = 0;
 	float num_b = 0;
+	float resultadoSuma;
 	//Menu de Inicio
 	do{
 		printf( "--Menu de opciones--\n"
@@ -86,6 +87,37 @@ int main(void) {
 						else
 						{
 							printf("Algo salio mal, se acabaron tus reintentos\n");
+						}
+						printf("*********************************************\n\n");
+						break;
+					case 3:
+						printf("\n*********************************************\n");
+						printf("--Opcion 3--\n");
+						if(!utn_suma(num_a, num_b, &resultadoSuma))
+						{
+							printf("a) La SUMA se realizo con exito\n");
+						}
+						else
+						{
+							printf("a) No se pudo realizar la operacion SUMA\n");
+						}
+						printf( "Pare ver los resultados de las operaciones, \n"
+								"Ingrese la Opcion 4 del Menu.\n");
+						printf("*********************************************\n\n");
+						break;
+					case 4:
+						printf("\n*********************************************\n");
+						printf("--Opcion 4--\n");
+						if(!utn_suma(num_a, num_b, &resultadoSuma))
+						{
+							printf(	"a) El resultado de %.2f + %.2f es: %.2f\n",
+									num_a,
+									num_b,
+									resultadoSuma);
+						}
+						else
+						{
+							printf("No se pudo realizar la operacion SUMA\n");
 						}
 						printf("*********************************************\n\n");
 						break;

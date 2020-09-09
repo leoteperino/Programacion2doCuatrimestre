@@ -199,3 +199,30 @@ int utn_promedioArrayInt(int Array[], int len, float* pResultado)
 	return retorno;
 }
 
+/*
+ * \brief Funcion que calcula la suma de dos numeros y guarda su resultado en un puntero
+ * \param Se pasa un numero flotante (primer operando)
+ * \param Se pasa un numero flotante (segundo operando)
+ * \return  Devuelve -1 en caso de no haber podido realizar la operacion }
+ * 			Devuelve 0 si la operacion se realizo con exito.
+ */
+int utn_suma(float num_a, float num_b,  float* pResultado)
+{
+	int retorno = -1;
+	float suma;
+	if(pResultado!=NULL)
+	{
+		suma = num_a+num_b;
+		*pResultado=suma;
+		retorno = 0;
+	}
+	return retorno;
+}
+
+
+
+
+
+
+
+
