@@ -299,18 +299,21 @@ int utn_multiplicar(float num_a, float num_b,  float* pResultado)
  * \return  Devuelve -1 en caso de no haber podido realizar la operacion
  * 			Devuelve 0 si la operacion se realizo con exito.
  */
-int utn_factorial(float num_a)
+int utn_factorial(int num_a, long* pResultado)
 {
-	int retorno;
-	if(num_a)
+	int retorno = -1;
+	if(pResultado!=NULL)
 	{
-		return 1;
+		long bufferLong = 1;
+		int i = 1;
+		do {
+			bufferLong *= i;
+			i++;
+		} while (i <= num_a);
+		*pResultado = bufferLong;
+		retorno = 0;
 	}
-	else
-	{
-		retorno=num_a*utn_factorial(num_a-1);
-		return retorno;
-	}
+	return retorno;
 }
 
 

@@ -25,7 +25,8 @@ int main(void) {
 	float resultadoResta;
 	float resultadoDivision;
 	float resultadoMultiplicacion;
-	int resultadoFactorial;
+	long resultadoFactorialA;
+	long resultadoFactorialB;
 	//Menu de Inicio
 	do{
 		printf( "--Menu de opciones--\n"
@@ -36,8 +37,9 @@ int main(void) {
 				"   b) Calcular la resta (%.2f-%.2f)\n"
 				"   c) Calcular la division (%.2f/%.2f)\n"
 				"   d) Calcular la multiplicacion (%.2f*%.2f)\n"
-				"   e) Calcular el factorial (%.2f!)\n"
-				"4. Informar resultados\n",
+				"   e) Calcular el factorial (A=%.2f!) y (B=%.2f!)\n"
+				"4. Informar resultados\n"
+				"s. Salir\n",
 				num_a,
 				num_b,
 				num_a,
@@ -48,7 +50,8 @@ int main(void) {
 				num_b,
 				num_a,
 				num_b,
-				num_a);
+				num_a,
+				num_b);
 		if(!utn_getInt(	&opcionesMenu,
 						"Ingrese la opcion de Menu deseada: ",
 						"ERROR",
@@ -97,48 +100,8 @@ int main(void) {
 					case 3:
 						printf("\n*********************************************\n");
 						printf("--Opcion 3--\n");
-
-						if(!utn_sumar(num_a, num_b, &resultadoSuma))
-						{
-							printf("a) La SUMA se realizo con exito\n");
-						}
-						else
-						{
-							printf("a) No se pudo realizar la operacion SUMA\n");
-						}
-
-						if(!utn_restar(num_a, num_b, &resultadoResta))
-						{
-							printf("b) La RESTA se realizo con exito\n");
-						}
-						else
-						{
-							printf("b) No se pudo realizar la operacion RESTA\n");
-						}
-
-						if(utn_dividir(num_a, num_b, &resultadoDivision)==0)
-						{
-							printf("c) La DIVISION se realizo con exito\n");
-						}
-						else if(utn_dividir(num_a, num_b, &resultadoDivision)==-2)
-						{
-							printf("c) La DIVISION no se realizo, ningun numero es divisible por 0\n");
-						}
-						else
-						{
-							printf("C) No se pudo realizar la operacion DIVISION\n");
-						}
-
-						if(!utn_restar(num_a, num_b, &resultadoMultiplicacion))
-						{
-							printf("d) La MULTIPLICACION se realizo con exito\n");
-						}
-						else
-						{
-							printf("d) No se pudo realizar la operacion MULTIPLICACION\n");
-						}
-
-						printf( "Para ver los resultados de las operaciones, \n"
+						printf( "Calculando Operaciones\n"
+								"Para ver los resultados de las operaciones, \n"
 								"Ingrese la Opcion 4 del Menu.\n");
 						printf("*********************************************\n\n");
 						break;
@@ -198,8 +161,27 @@ int main(void) {
 							printf("d) No se pudo realizar la operacion MULTIPLICACION\n");
 						}
 
-						resultadoFactorial = utn_factorial(num_a);
-						printf("\n%d\n", resultadoFactorial);
+						if(!utn_factorial(num_a, &resultadoFactorialA))
+						{
+							printf("e) El factorial de %.2f es: %ld",
+									num_a,
+									resultadoFactorialA);
+						}
+						else
+						{
+							printf("e) No se pudo realizar el calculo del FACTORIAL\n");
+						}
+
+						if(!utn_factorial(num_b, &resultadoFactorialB))
+						{
+							printf(" y el factorial de %.2f es: %ld\n",
+									num_b,
+									resultadoFactorialB);
+						}
+						else
+						{
+							printf("e) No se pudo realizar el calculo del FACTORIAL\n");
+						}
 
 						printf("*********************************************\n\n");
 						break;

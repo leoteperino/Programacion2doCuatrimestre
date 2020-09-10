@@ -18,6 +18,6 @@ int utn_sumar(float num_a, float num_b,  float* pResultado);
 int utn_restar(float num_a, float num_b,  float* pResultado);
 int utn_dividir(float num_a, float num_b, float* pResultado);
 int utn_multiplicar(float num_a, float num_b,  float* pResultado);
-int utn_factorial(float num_a);
+int utn_factorial(int num_a, long* pResultado);
 
 #endif /* UTN_H_ */
