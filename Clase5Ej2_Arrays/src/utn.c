@@ -199,3 +199,45 @@ int utn_promedioArrayInt(int Array[], int len, float* pResultado)
 	return retorno;
 }
 
+int utn_calcularmaximoArray(int Array[], int len, int* maximo)
+{
+	int retorno = -1;
+	int bufferInt;
+	int i;
+	if(Array!=NULL && len>0 && maximo!=NULL)
+	{
+		bufferInt = Array[0];
+		for(i=1;i<len;i++)
+		{
+			if(Array[i]>bufferInt)
+			{
+				bufferInt = Array[i];
+			}
+			*maximo = bufferInt;
+			retorno = 0;
+		}
+	}
+	return retorno;
+}
+
+int utn_calcularminimoArray(int Array[], int len, int* minimo)
+{
+	int retorno = -1;
+	int bufferInt;
+	int i;
+	if(Array!=NULL && len>0 && minimo!=NULL)
+	{
+		bufferInt = Array[0];
+		for(i=1;i<len;i++)
+		{
+			if(Array[i]<bufferInt)
+			{
+				bufferInt = Array[i];
+			}
+			*minimo = bufferInt;
+			retorno = 0;
+		}
+	}
+	return retorno;
+}
+

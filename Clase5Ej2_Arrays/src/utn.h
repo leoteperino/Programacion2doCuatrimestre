@@ -14,5 +14,7 @@ int utn_getChar(char* pResultado, char* pMensaje, char* pMensajeError, char min,
 void utn_cargandoArrayInt(int Array[], int len, int min, int max, int reintentos);
 void utn_imprimirArrayInt(int Array[], int len);
 int utn_promedioArrayInt(int Array[], int len, float* pResultado);
+int utn_calcularmaximoArray(int Array[], int len, int* maximo);
+int utn_calcularminimoArray(int Array[], int len, int* minimo);
 
 #endif /* UTN_H_ */
