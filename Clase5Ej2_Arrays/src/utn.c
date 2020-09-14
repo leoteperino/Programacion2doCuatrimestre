@@ -199,7 +199,14 @@ int utn_promedioArrayInt(int Array[], int len, float* pResultado)
 	return retorno;
 }
 
-int utn_calcularmaximoArray(int Array[], int len, int* maximo)
+/*
+ * \brief Funcion que calcula el maximo numero de un Array de enteros
+ * \param Se pasa un puntero int que llevara el numero maximo
+ * \param Se pasa el Array
+ * \param Se pasa el largo del Array
+ * \return Devielve -1 en caso de no haber podido completarse la operacion, Devuelve 0 si esta todo OK
+ */
+int utn_calcularmaximoArray(int* Array, int len, int* maximo)
 {
 	int retorno = -1;
 	int bufferInt;
@@ -220,6 +227,13 @@ int utn_calcularmaximoArray(int Array[], int len, int* maximo)
 	return retorno;
 }
 
+/*
+ * \brief Funcion que calcula el minimo numero de un Array de enteros
+ * \param Se pasa un puntero int que llevara el numero maximo
+ * \param Se pasa el Array
+ * \param Se pasa el largo del Array
+ * \return Devuelve -1 en caso de no haber podido completarse la operacion, Devuelve 0 si esta OK
+ */
 int utn_calcularminimoArray(int Array[], int len, int* minimo)
 {
 	int retorno = -1;
@@ -240,4 +254,83 @@ int utn_calcularminimoArray(int Array[], int len, int* minimo)
 	}
 	return retorno;
 }
+
+/*
+ * \brief Funcion que ordena de menor a mayor los numeros de un Array
+ * \param Se pasa el Array
+ * \param Se pasa el largo del Array
+ * \return Devuelve -1 en caso de no haber podido completarse la operacion, Devuelve 0 si esta OK
+ */
+int utn_ordenarArrayMenorMayor(int array[], int len)
+{
+	int retorno=-1;
+	int i;
+	int bufferInt;
+	int flagEstadoDesordenado=1;
+	int nuevoLimite;
+
+	if(array!=NULL && len >=1)
+	{
+		nuevoLimite = len -1;
+		while(flagEstadoDesordenado==1)
+		{
+			flagEstadoDesordenado=0;
+			for(i=0 ; i<nuevoLimite  ; i++)
+			{
+				if(array[i] > array[i+1])
+				{
+					bufferInt = array[i];
+					array[i] = array[i+1];
+					array[i+1] = bufferInt;
+					flagEstadoDesordenado=1;
+				}
+			}
+			nuevoLimite--;
+		}
+		retorno=0;
+	}
+	return retorno;
+}
+
+
+/*
+ * \brief Funcion que ordena de Mayor a menor los numeros de un Array
+ * \param Se pasa el Array
+ * \param Se pasa el largo del Array
+ * \return Devuelve -1 en caso de no haber podido completarse la operacion, Devuelve 0 si esta OK
+ */
+int utn_ordenarArrayMayorMenor(int array[], int len)
+{
+	int retorno=-1;
+	int i;
+	int bufferInt;
+	int flagEstadoDesordenado=1;
+	int nuevoLimite;
+
+	if(array!=NULL && len >=1)
+	{
+		nuevoLimite = len -1;
+		while(flagEstadoDesordenado==1)
+		{
+			flagEstadoDesordenado=0;
+			for(i=0 ; i<nuevoLimite  ; i++)
+			{
+				if(array[i] < array[i+1])
+				{
+					bufferInt = array[i];
+					array[i] = array[i+1];
+					array[i+1] = bufferInt;
+					flagEstadoDesordenado=1;
+				}
+			}
+			nuevoLimite--;
+		}
+		retorno=0;
+	}
+	return retorno;
+}
+
+
+
+
 

@@ -38,24 +38,31 @@ int main(void) {
 		printf("\nAlgo salio mal, vuelve a intentarlo.\n");
 	}
 	printf("\n\nNumero maximo ingresado en el Array:\n");
-//	if(!utn_calcularmaximoArray(array, ARRAY_LEN, &maximo))
-//	{
-//		printf("El numero maximo ingresado es: %d\n", maximo);
-//	}
-//	else
-//	{
-//		printf("\nAlgo salio mal, vuelve a intentarlo.\n");
-//	}
-//	printf("\n\nNumero minimo ingresado en el Array:\n");
-//	if(!utn_calcularminimoArray(array, ARRAY_LEN, &minimo))
-//	{
-//		printf("El numero minimo ingresado es: %d", minimo);
-//	}
-//	else
-//	{
-//		printf("\nAlgo salio mal, vuelve a intentarlo.\n");
-//	}
-	utn_calcularminimoArray(array, ARRAY_LEN, &minimo);
-	printf("\n%d\n", minimo);
+	if(!utn_calcularmaximoArray(array, ARRAY_LEN, &maximo))
+	{
+		printf("El numero maximo ingresado es: %d\n", maximo);
+	}
+	else
+	{
+		printf("\nAlgo salio mal, vuelve a intentarlo.\n");
+	}
+	printf("\n\nNumero minimo ingresado en el Array:\n");
+	if(!utn_calcularminimoArray(array, ARRAY_LEN, &minimo))
+	{
+		printf("El numero minimo ingresado es: %d\n", minimo);
+	}
+	else
+	{
+		printf("\nAlgo salio mal, vuelve a intentarlo.\n");
+	}
+
+	printf("\n\nEl array ordenado de menor a mayor es:");
+	utn_ordenarArrayMenorMayor(array, ARRAY_LEN);
+	utn_imprimirArrayInt(array, ARRAY_LEN);
+
+	printf("\n\nEl array ordenado de mayor a menor es:");
+		utn_ordenarArrayMayorMenor(array, ARRAY_LEN);
+		utn_imprimirArrayInt(array, ARRAY_LEN);
+
 	return EXIT_SUCCESS;
 }

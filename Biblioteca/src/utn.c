@@ -131,3 +131,208 @@ int utn_getChar(char* pResultado, char* pMensaje, char* pMensajeError, char min,
 	}
 	return retorno;
 }
+
+/**
+ * \brief Funcion que pide numeros y carga un Array de Enteros
+ * \param Se le pasa como parametro el array
+ * \param Se le pasa el largo del array
+ * \param Se le pasa el minimo y el maximo de los numeros que quiero ingresar
+ * \param Se le pasa la cantidad de reintentos en caso de error
+ * \return No se devuelve nada
+ */
+void utn_cargandoArrayInt(int Array[], int len, int min, int max, int reintentos)
+{
+	int bufferInt;
+	int i;
+
+	for(i=0;i<len;i++)
+	{
+		if(!utn_getInt(&bufferInt, "Ingrese un numero: ", "ERROR", min, max, reintentos))
+		{
+			Array[i] = bufferInt;
+		}
+		else
+		{
+			printf("\nAlgo salio mal, no hay mas reinmtentos");
+		}
+	}
+}
+
+/**
+ * \brief Funcion que imprime un Array de Numeros
+ * \param Recibe como primer parametro el array a imprimir
+ * \param Recibe como segundfo parametro el largo del Array
+ * \return No Devuelde nada
+ */
+void utn_imprimirArrayInt(int Array[], int len)
+{
+	int i;
+	for(i=0;i<len;i++)
+	{
+		printf("\nIndice: %d - Valor: %d", i, Array[i]);
+	}
+}
+
+/*
+ * \brief Funcion que calcula el promedio de un Array de enteros
+ * \param Se pasa un puntero float que llevara el resultado
+ * \param Se pasa el Array
+ * \param Se pasa el largo del Array
+ * \return Devielve -1 en casdo de no haber podido leer el Array, Devuelve 0 si esta todo OK
+ */
+int utn_promedioArrayInt(int Array[], int len, float* pResultado)
+{
+	int retorno = -1;
+	int acumulador = 0;
+	float promedio;
+	int i;
+	if(pResultado!=NULL && len>0)
+	{
+		for(i=0;i<len;i++)
+		{
+			acumulador+=Array[i];
+		}
+		promedio=(float)acumulador/len;
+		*pResultado = promedio;
+		retorno = 0;
+	}
+	return retorno;
+}
+
+/*
+ * \brief Funcion que calcula el maximo numero de un Array de enteros
+ * \param Se pasa un puntero int que llevara el numero maximo
+ * \param Se pasa el Array
+ * \param Se pasa el largo del Array
+ * \return Devielve -1 en caso de no haber podido completarse la operacion, Devuelve 0 si esta todo OK
+ */
+int utn_calcularmaximoArray(int* Array, int len, int* maximo)
+{
+	int retorno = -1;
+	int bufferInt;
+	int i;
+	if(Array!=NULL && len>0 && maximo!=NULL)
+	{
+		bufferInt = Array[0];
+		for(i=1;i<len;i++)
+		{
+			if(Array[i]>bufferInt)
+			{
+				bufferInt = Array[i];
+			}
+			*maximo = bufferInt;
+			retorno = 0;
+		}
+	}
+	return retorno;
+}
+
+/*
+ * \brief Funcion que calcula el minimo numero de un Array de enteros
+ * \param Se pasa un puntero int que llevara el numero maximo
+ * \param Se pasa el Array
+ * \param Se pasa el largo del Array
+ * \return Devuelve -1 en caso de no haber podido completarse la operacion, Devuelve 0 si esta OK
+ */
+int utn_calcularminimoArray(int Array[], int len, int* minimo)
+{
+	int retorno = -1;
+	int bufferInt;
+	int i;
+	if(Array!=NULL && len>0 && minimo!=NULL)
+	{
+		bufferInt = Array[0];
+		for(i=1;i<len;i++)
+		{
+			if(Array[i]<bufferInt)
+			{
+				bufferInt = Array[i];
+			}
+			*minimo = bufferInt;
+			retorno = 0;
+		}
+	}
+	return retorno;
+}
+
+/*
+ * \brief Funcion que ordena de menor a mayor los numeros de un Array
+ * \param Se pasa el Array
+ * \param Se pasa el largo del Array
+ * \return Devuelve -1 en caso de no haber podido completarse la operacion, Devuelve 0 si esta OK
+ */
+int utn_ordenarArrayMenorMayor(int array[], int len)
+{
+	int retorno=-1;
+	int i;
+	int bufferInt;
+	int flagEstadoDesordenado=1;
+	int nuevoLimite;
+
+	if(array!=NULL && len >=1)
+	{
+		nuevoLimite = len -1;
+		while(flagEstadoDesordenado==1)
+		{
+			flagEstadoDesordenado=0;
+			for(i=0 ; i<nuevoLimite  ; i++)
+			{
+				if(array[i] > array[i+1])
+				{
+					bufferInt = array[i];
+					array[i] = array[i+1];
+					array[i+1] = bufferInt;
+					flagEstadoDesordenado=1;
+				}
+			}
+			nuevoLimite--;
+		}
+		retorno=0;
+	}
+	return retorno;
+}
+
+
+/*
+ * \brief Funcion que ordena de Mayor a menor los numeros de un Array
+ * \param Se pasa el Array
+ * \param Se pasa el largo del Array
+ * \return Devuelve -1 en caso de no haber podido completarse la operacion, Devuelve 0 si esta OK
+ */
+int utn_ordenarArrayMayorMenor(int array[], int len)
+{
+	int retorno=-1;
+	int i;
+	int bufferInt;
+	int flagEstadoDesordenado=1;
+	int nuevoLimite;
+
+	if(array!=NULL && len >=1)
+	{
+		nuevoLimite = len -1;
+		while(flagEstadoDesordenado==1)
+		{
+			flagEstadoDesordenado=0;
+			for(i=0 ; i<nuevoLimite  ; i++)
+			{
+				if(array[i] < array[i+1])
+				{
+					bufferInt = array[i];
+					array[i] = array[i+1];
+					array[i+1] = bufferInt;
+					flagEstadoDesordenado=1;
+				}
+			}
+			nuevoLimite--;
+		}
+		retorno=0;
+	}
+	return retorno;
+}
+
+
+
+
+
+
+
