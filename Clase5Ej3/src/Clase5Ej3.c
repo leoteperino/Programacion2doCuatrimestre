@@ -24,6 +24,8 @@ int main(void) {
 	int arrayNumeros[QTY_LEN];
 	int maximo;
 	int minimo;
+	float promedio;
+	int auxInt;
 
 	do
 	{
@@ -92,6 +94,48 @@ int main(void) {
 					else
 					{
 						printf("\nNo se pudo calcular el minimo\n");
+					}
+					printf("\n********************************************\n");
+					break;
+
+				case 5:
+
+					printf("\n********************************************\n");
+					if(!utn_ordenarArrayMenorMayor(arrayNumeros, QTY_LEN))
+					{
+						printf("Array ordenado de Menor a Mayor: ");
+					}
+					utn_mostrarArrayEnteros(arrayNumeros, QTY_LEN);
+					if(!utn_ordenarArrayMayorMenor(arrayNumeros, QTY_LEN))
+					{
+						printf("\nArray ordenado de Mayor a Menor: ");
+					}
+					utn_mostrarArrayEnteros(arrayNumeros, QTY_LEN);
+
+					printf("\n********************************************\n");
+					break;
+
+				case 6:
+
+					printf("\n********************************************\n");
+					if(!utn_promedioArrayInt(arrayNumeros, QTY_LEN, &promedio))
+					{
+						printf("El promedio de todos lo numeros ingresados es: %.2f\n", promedio);
+					}
+
+					printf("\n********************************************\n");
+					break;
+
+				case 11:
+					printf("\n********************************************\n");
+					utn_mostrarArrayEnteros(arrayNumeros, QTY_LEN);
+					if(!utn_getIndiceArray(arrayNumeros, QTY_LEN, &auxInt))
+					{
+						if(!utn_modificarArrayPorIndice(arrayNumeros, QTY_LEN, auxInt))
+						{
+							printf("\nArray modificado.");
+							utn_mostrarArrayEnteros(arrayNumeros, QTY_LEN);
+						}
 					}
 					printf("\n********************************************\n");
 					break;
