@@ -26,7 +26,7 @@ int main(void){
 	respuestaStrncmp=strncmp(nombre, nombre2, sizeof(nombre)-1);
 	printf("Respuesta de comparar un Array con otro strncmp: %d\n", respuestaStrncmp);
 	respuestaStrnlen=strnlen(nombre, sizeof(nombre)-1);
-	printf("Uso de a funcion strnlen: %d\n", respuestaStrnlen);
+	printf("Uso de la funcion strnlen: %d\n", respuestaStrnlen);
 	strncpy(nombre, nombre3,(sizeof(nombre)-1));
 	printf("El array nombre ahora tiene el valor: %s (funcion strncpy)\n", nombre);
 	sprintf(varSprintf,
