@@ -26,5 +26,6 @@ int utn_getCaracter(char* pResultado, int longitud,char* pMensaje, char* pMensaj
 int utn_getDni(char* pResultado, int longitud,char* pMensaje, char* pMensajeError, int reintentos);
 int utn_getCuit(char* pResultado, int longitud,char* pMensaje, char* pMensajeError, int reintentos);
 int utn_getTelefono(char* pResultado, int longitud,char* pMensaje, char* pMensajeError, int reintentos);
+int utn_getCaracterSN(char* pResultado, int longitud,char* pMensaje, char* pMensajeError, int reintentos);
 
 #endif /* UTN_H_ */

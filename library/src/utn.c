@@ -31,7 +31,8 @@ static int esDNI(char* cadena, int longitud);
 static int esCUIT(char* cadena, int longitud);
 static int getTelefono(char* pResultado, int longitud);
 static int esTelefono(char* cadena,int longitud);
-
+static int getCaracterSN(char* pResultado, int longitud);
+static int esCaracterSN(char* cadena, int longitud);
 /*********Funciones Estaticas*********/
 /*********GET*********/
 /*
@@ -133,7 +134,7 @@ static int getNombre(char* pResultado, int longitud)
     char buffer[ARRAY_LEN_NOMBRE];
     if(pResultado!=NULL && longitud>0)
     {
-    	if(	getString(buffer,sizeof(buffer)) &&
+    	if(	!getString(buffer,sizeof(buffer)) &&
     		esNombre(buffer,sizeof(buffer)) &&
 			strnlen(buffer,sizeof(buffer))<longitud)
     	{
@@ -243,6 +244,28 @@ static int getTelefono(char* pResultado, int longitud)
 		strncpy(pResultado,bufferString,longitud);
 	}
 	return res;
+}
+/**
+ * \brief Obtiene un Caracter que solo sea s o n, para validacion
+ * \param pResultado Puntero char al espacio de memoria donde se dejara el resultado de la funcion
+ * \param longitud entrero que marca la longitud de la cadena a ingresar.
+ * \return Retorna 0 (EXITO) si se obtiene un numero entero y -1 (ERROR)
+ **/
+static int getCaracterSN(char* pResultado, int longitud)
+{
+	int retorno=-1;
+    char buffer[ARRAY_LEN_CHAR];
+	if(pResultado!=NULL && longitud>0)
+	{
+		if(	!getString(buffer,sizeof(buffer)) &&
+			esCaracterSN(buffer,sizeof(buffer)) &&
+			strnlen(buffer,sizeof(buffer))<longitud)
+		{
+			strncpy(pResultado,buffer,longitud);
+			retorno=0;
+		}
+	}
+	return retorno;
 }
 /*********Estaticas Validaciones*********/
 /**
@@ -411,6 +434,30 @@ static int esCaracter(char* cadena, int longitud)
 			{
 				retorno=0;
 				printf("Error de validacion, solo puede ingresar un caracter.\n");
+				break;
+			}
+		}
+	}
+	return retorno;
+}
+/**
+ * \brief Verifica si la cadena ingresada es la letra S o N
+ * \param cadena char de caracteres a ser analizada
+ * \param longitud entero que marca la longitud de la cadena ingresada.
+ * \return Retorna 1 (verdadero) si la cadena es un nombre valido, 0 (falso) si no lo es.
+ **/
+static int esCaracterSN(char* cadena, int longitud)
+{
+	int i=0;
+	int retorno=1;
+	if(cadena!=NULL && longitud>0)
+	{
+		for(i=0;cadena[i]!='\0' && i<longitud; i++)
+		{
+			if(cadena[i]!='S' && cadena[i]!='N' && cadena[i]!='s' && cadena[i]!='n')
+			{
+				retorno=0;
+				printf("Error de validacion, solo puede ingresar S o N.\n");
 				break;
 			}
 		}
@@ -863,6 +910,37 @@ int utn_getTelefono(char* pResultado, int longitud,char* pMensaje, char* pMensaj
 			break;
 		}
 		printf("%s",pMensajeError);
+	}
+	return retorno;
+}
+/*
+ * \brief Pide un Caracter solo S o N al usuario.
+ * \param pResultado: puntero a char donde se guarda el valor a mostrar en el main.
+ * \param longitud entero que marca la longitud de la cadena a ingresar.
+ * \param pMensaje: puntero a char, donde se pasa el mensaje a mostrar.
+ * \param pMensajeError: puntero a mensaje de error que se le pasa en caso de error.
+ * \param reintentos: entero, es la cantidad de reintentos que tendra el usuario en caso de error.
+ * \return devuelve 0 en caso de Exito y -1 en caso de Error.
+ * */
+int utn_getCaracterSN(char* pResultado, int longitud,char* pMensaje, char* pMensajeError, int reintentos)
+{
+	char bufferString[ARRAY_LEN_CHAR];
+	int retorno=-1;
+	int i=0;
+	if(pResultado!=NULL && pMensaje!=NULL && pMensajeError!=NULL && reintentos>0)
+	{
+		for(i=0;i<=reintentos;i++)
+		{
+			printf("%s",pMensaje);
+			if( !getCaracterSN(bufferString,sizeof(bufferString)) &&
+				strnlen(bufferString,sizeof(bufferString))<longitud )
+			{
+				strncpy(pResultado,bufferString,longitud);
+				retorno = 0;
+				break;
+			}
+			printf("%s",pMensajeError);
+		}
 	}
 	return retorno;
 }
