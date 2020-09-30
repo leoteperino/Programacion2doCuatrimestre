@@ -1,7 +1,7 @@
 /*
- * Alumno.c
+ * Nacionalidad.c
  *
- *  Created on: Sep 26, 2020
+ *  Created on: Sep 29, 2020
  *      Author: leandro
  */
 
@@ -21,7 +21,7 @@ static int generarIdNuevo(void);
  * \param int Limite del array
  * \return Retorna 0 (EXITO) y -1 (ERROR)
  */
-int alumno_inicializarArray(Alumno* array, int len)
+int nac_inicializarArray(Nacionalidad* array, int len)
 {
 	int ret=-1;
 	int i=0;
@@ -36,12 +36,12 @@ int alumno_inicializarArray(Alumno* array, int len)
 	return ret;
 }
 /**
- * \brief Imprime los alumnos cargados
- * \param Alumno arrayAlumnos[], Es el puntero al array de alumnos
+ * \brief Imprime los Nacionalidads cargados
+ * \param Nacionalidad arrayNacionalidads[], Es el puntero al array de Nacionalidads
  * \param int limite, es el limite de array
  * \return (-1) Error / (0) Ok
  */
-int alumno_mostrarLista(Alumno* array, int len)
+int nac_mostrarLista(Nacionalidad* array, int len)
 {
 	int ret=-1;
 	int i=0;
@@ -52,11 +52,9 @@ int alumno_mostrarLista(Alumno* array, int len)
 			if(array[i].isEmpty==FALSE)
 			{
 				ret=0;
-				printf("ID: %d - Nombre: %s %s - Legajo: %d - Estado:%d\n",
+				printf("ID:%d - Nacionalidad:%s - Estado:%d\n",
 						array[i].id,
 						array[i].name,
-						array[i].lastName,
-						array[i].file,
 						array[i].isEmpty);
 			}
 		}
@@ -64,12 +62,12 @@ int alumno_mostrarLista(Alumno* array, int len)
 	return ret;
 }
 /**
- * \brief Busca el primer lugar vacio de la lista de Alumnos
- * \param Alumno arrayAlumnos[], Es el puntero al array de alumnos
+ * \brief Busca el primer lugar vacio de la lista de Nacionalidads
+ * \param Nacionalidad arrayNacionalidads[], Es el puntero al array de Nacionalidads
  * \param int limite, es el limite de array
  * \return devuelve el indice del lugar vacio de la lista o -1 en caso de no encontrar lugar vacio
  */
-int alumno_buscarVacio(Alumno* array, int len)
+int nac_buscarVacio(Nacionalidad* array, int len)
 {
 	int ret = -1;
 	int i;
@@ -97,28 +95,24 @@ static int generarIdNuevo(void)
 	return id;
 }
 /**
- * \brief Realiza el alta de un alumno solo si el indice corresponde a un Empty
- * \param Alumno arrayAlumnos[], Es el puntero al array de alumnos
+ * \brief Realiza el alta de un Nacionalidad solo si el indice corresponde a un Empty
+ * \param Nacionalidad arrayNacionalidads[], Es el puntero al array de Nacionalidads
  * \param int len, es el limite de array
- * \param int indice, es el indice donde se cargara el alumno
+ * \param int indice, es el indice donde se cargara el Nacionalidad
  * \return (-1) Error / (0) Ok
  */
-int alumno_AltaDeAlumnos(Alumno* array, int len, int indice)
+int nac_AltaDeNacionalidad(Nacionalidad* array, int len, int indice)
 {
 	int ret=-1;
-	Alumno bufferAlumno;
+	Nacionalidad bufferNacionalidad;
 	if(array!=NULL && len>0 && indice>=0 && indice<=len && array[indice].isEmpty==TRUE)
 	{
-		if(	!utn_getNombre(bufferAlumno.name,ARRAY_LEN_NAME,
-			"Ingrese un nombre: ","ERROR\n",QTY_REINT) &&
-			!utn_getApellido(bufferAlumno.lastName,ARRAY_LEN_APELLIDO,
-			"Ingrese un apellido: ","ERROR\n",QTY_REINT) &&
-			!utn_getNumero(&bufferAlumno.file,"Ingrese un Numero de legajo: ",
-			"ERROR\n",ZERO,MAX_FILE,QTY_REINT))
+		if(	!utn_getNombre(bufferNacionalidad.name,ARRAY_LEN_NAME,
+			"Ingrese su Nacionalidad: ","ERROR\n",QTY_REINT))
 		{
-			bufferAlumno.id=generarIdNuevo();
+			bufferNacionalidad.id=generarIdNuevo();
 			array[indice].isEmpty=FALSE;
-			array[indice]=bufferAlumno;
+			array[indice]=bufferNacionalidad;
 			ret=0;
 		}
 	}
@@ -126,12 +120,12 @@ int alumno_AltaDeAlumnos(Alumno* array, int len, int indice)
 }
 /**
  * \brief Devuelve el Indice del id pasado por parametro
- * \param Alumno arrayAlumnos[], Es el puntero al array de alumnos
+ * \param Nacionalidad arrayNacionalidads[], Es el puntero al array de Nacionalidads
  * \param int len, es el limite de array
- * \param int id, es el id del Alumno que quiero obtener
+ * \param int id, es el id del Nacionalidad que quiero obtener
  * \return (-1) Error / Devuelve el Indice del ID pasado por parametro
  */
-int alumnos_buscarIndicexId(Alumno* array, int len, int id)
+int nac_buscarIndicexId(Nacionalidad* array, int len, int id)
 {
 	int ret=-1;
 	int i;
@@ -149,70 +143,57 @@ int alumnos_buscarIndicexId(Alumno* array, int len, int id)
 	return ret;
 }
 /**
- * \brief Realiza la edicion de un alumno solo si el indice es valido.
- * \param Alumno arrayAlumnos[], Es el puntero al array de alumnos
+ * \brief Realiza la edicion de un Nacionalidad solo si el indice es valido.
+ * \param Nacionalidad arrayNacionalidads[], Es el puntero al array de Nacionalidads
  * \param int len, es el limite de array
- * \param int indice, es el indice donde se cargara el alumno
+ * \param int indice, es el indice donde se cargara el Nacionalidad
  * \return (-1) Error / (0) Ok
  */
-int alumno_ModificarAlumnos(Alumno* array, int len, int indice)
+int nac_ModificarNacionalidad(Nacionalidad* array, int len, int indice)
 {
 	int ret=-1;
-	Alumno bufferAlumno;
+	Nacionalidad bufferNacionalidad;
 	if(array!=NULL && len>0 && indice>=0 && indice<=len)
 	{
-		if(	!utn_getNombre(bufferAlumno.name,ARRAY_LEN_NAME,
-			"Ingrese un nombre: ","ERROR\n",QTY_REINT) &&
-			!utn_getApellido(bufferAlumno.lastName,ARRAY_LEN_APELLIDO,
-			"Ingrese un apellido: ","ERROR\n",QTY_REINT) &&
-			!utn_getNumero(&bufferAlumno.file,"Ingrese un Numero de legajo: ",
-			"ERROR\n",ZERO,MAX_FILE,QTY_REINT))
+		if(	!utn_getNombre(bufferNacionalidad.name,ARRAY_LEN_NAME,
+			"Ingrese una Nacionalidad: ","ERROR\n",QTY_REINT))
 		{
-			bufferAlumno.id = array[indice].id;
-			array[indice]=bufferAlumno;
+			bufferNacionalidad.id = array[indice].id;
+			array[indice]=bufferNacionalidad;
 			ret=0;
 		}
 	}
 	return ret;
 }
 /**
- * \brief Realiza la baja logica de un alumno solo si el indice es valido
- * \param Alumno arrayAlumnos[], Es el puntero al array de alumnos
+ * \brief Realiza la baja logica de un Nacionalidad solo si el indice es valido
+ * \param Nacionalidad arrayNacionalidads[], Es el puntero al array de Nacionalidads
  * \param int len, es el limite de array
- * \param int indice, es el indice donde se cargara el alumno
+ * \param int indice, es el indice donde se cargara el Nacionalidad
  * \return (-1) Error / (0) Ok
  */
-int alumno_BajaAlumnos(Alumno* array, int len, int indice)
+int nac_BajaNacionalidad(Nacionalidad* array, int len, int indice)
 {
 	int ret=-1;
-	Alumno bufferAlumno;
+	Nacionalidad bufferNacionalidad;
 	char auxChar;
 	if(array!=NULL && len>0 && indice>=0 && indice<=len)
 	{
 		if(!utn_getCaracterSN(&auxChar,ARRAY_LEN_CHAR,
-		   "Esta seguro que desea borrar este Alumno?[S/N]:",
+		   "Esta seguro que desea borrar este Nacionalidad?[S/N]:",
 		    "ERROR\n",QTY_REINT))
 		{
 			switch(auxChar)
 			{
 			 	 case 'S':
+			 	 case 's':
 			 		array[indice].isEmpty=TRUE;
-					bufferAlumno.id = array[indice].id;
-					array[indice]=bufferAlumno;
+					bufferNacionalidad.id = array[indice].id;
+					array[indice]=bufferNacionalidad;
 					ret=0;
 			 		break;
 			 	 case 'N':
-			 		 break;
-			 	case 's':
-					array[indice].isEmpty=TRUE;
-					bufferAlumno.id = array[indice].id;
-					array[indice]=bufferAlumno;
-					ret=0;
-					break;
-				 case 'n':
-					 break;
-			 	 default:
-			 		 printf("Dato invalido, solo Ingrese S o N\n");
+			 	 case 'n':
 			 		 break;
 			}
 		}
@@ -221,17 +202,17 @@ int alumno_BajaAlumnos(Alumno* array, int len, int indice)
 }
 /**
  * \brief Ordena el array por nombre
- * \param array Alumno
+ * \param array Nacionalidad
  * \param len Limite del array de clientes
  * \return Retorna el incice de la posicion vacia y -1 (ERROR)
  *
  */
-int alumno_ordenarPorNombre(Alumno* array,int len)
+int nac_ordenarPorNombre(Nacionalidad* array,int len)
 {
 	int ret = -1;
 	int flagSwap;
 	int i;
-	Alumno buffer;
+	Nacionalidad buffer;
 	if(array!=NULL && len>0)
 	{
 		do
@@ -243,7 +224,7 @@ int alumno_ordenarPorNombre(Alumno* array,int len)
 				{
 					continue;
 				}
-				if(strncmp(array[i].name,array[i+1].name,ARRAY_LEN_ALUMNOS) > 0)
+				if(strncmp(array[i].name,array[i+1].name,ARRAY_LEN_NOMBRE) > 0)
 				{
 					flagSwap = 1;
 					buffer = array[i];

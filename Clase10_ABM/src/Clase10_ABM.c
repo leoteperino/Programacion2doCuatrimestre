@@ -14,6 +14,7 @@
 #include <string.h>
 #include "utn.h"
 #include "Alumno.h"
+#include "Nacionalidad.h"
 
 
 #define MAX_OPTION 6
