@@ -274,6 +274,46 @@ int entidad_ordenarEntidadID(Entidad* array,int limite)
 }
 
 /**
+ * \brief Ordenar el array de Entidad por un doble criterio ascendente o descendente
+ * \param array Array de Entidad
+ * \param len int Limite del array de Entidad
+ * \param orden int [1]-Indica ascendente - [0]-Indica Descendente
+ * \return Retorna el incice de la posicion vacia y -1 (ERROR)
+ */
+int ordenarEntidadDobleCriterio(Entidad* list, int len, int order)
+{
+	int ret=-1;
+	int flagSwap;
+	int i;
+	Entidad buffer;
+	if(list!=NULL && len>0)
+	{
+		do
+		{
+			flagSwap = 0;
+			for(i=0;i<len-1;i++)
+			{
+				if(
+					(order==1 && strncmp(list[i].nombre,list[i+1].nombre,ARRAY_LEN_NOMBRE)>0) ||
+				    ((order==1 && strncmp(list[i].nombre,list[i+1].nombre,ARRAY_LEN_NOMBRE)==0) &&
+				    (list[i].sector > list[i+1].sector)) ||
+				    (order==0 && strncmp(list[i].nombre,list[i+1].nombre,ARRAY_LEN_NOMBRE) < 0) ||
+				    ((order==0 && strncmp(list[i].nombre,list[i+1].nombre,ARRAY_LEN_NOMBRE) == 0) &&
+				    (list[i].sector < list[i+1].sector)))
+				{
+					flagSwap = 1;
+					buffer = list[i];
+					list[i] = list[i+1];
+					list[i+1]=buffer;
+				}
+			}
+			len--;
+		}while(flagSwap);
+	}
+	return ret;
+}
+
+/**
  * \brief Da de alta una Entidad en una posicion del array
  * \param array Array de Entidad a ser actualizado
  * \param limite Limite del array de Entidad
