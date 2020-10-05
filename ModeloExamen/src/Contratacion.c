@@ -103,7 +103,8 @@ int con_altaArrayContratacion(Contratacion* array,int limite)
 		{
 			if( !utn_getCuit(bufferContratacion.cuitCliente,LENGTH_CUIT,"Ingrese su Cuit [xx-xxxxxxxx-x]: ", "ERROR, cuit invalido.\n",QTY_REINT) &&
 				!utn_getNumero(&bufferContratacion.cantDias,"Ingrese los dias a contratar: ","ERROR",MIN_DIAS,MAX_DIAS,QTY_REINT) &&
-				!utn_getTexto(bufferContratacion.nombreArchivo,LENGTH_ARCHIVO,"Ingrese el nombre del archivo: ","ERROR",QTY_REINT))
+				!utn_getTexto(bufferContratacion.nombreArchivo,LENGTH_ARCHIVO,"Ingrese el nombre del archivo: ","ERROR",QTY_REINT) &&
+				!utn_getNumero(&bufferContratacion.idPantalla,"Ingrese el id de pantalla a contratar: ","ERROR",MIN_DIAS,MAX_DIAS,QTY_REINT))
 			{
 				bufferContratacion.id = con_generarNuevoId();
 				bufferContratacion.isEmpty = FALSE;

@@ -4,9 +4,13 @@
 #define LENGTH_NOMBRE 30
 #define LENGTH_APELLIDO 50
 #define LENGTH_CUIT 14
+#define LENGTH_ENTIDAD 100
 #define TRUE 1
 #define FALSE 0
 #define QTY_REINT 2
+#define MIN_OPTION_MENU 1
+#define MAX_OPTION_MENU 10
+#define MAX_OPTION_MENU_INFO 4
 
 typedef struct
 {
