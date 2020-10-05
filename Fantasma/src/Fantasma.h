@@ -22,15 +22,13 @@ typedef struct
 int entidad_imprimirEntidad(Entidad* pEntidad);
 int entidad_imprimirArrayEntidad(Entidad* array,int limite);
 int entidad_inicializarArrayEntidad(Entidad* array,int limite);
-int entidad_altaArrayEntidad(Entidad* array,int limite, int indice);
-int entidad_modificarArrayEntidad(Entidad* array,int limite, int indice);
-int entidad_bajaArrayEntidad(Entidad* array,int limite, int indice);
-int entidad_buscarIdEntidad(Entidad array[], int limite, int valorBuscado);
+int entidad_altaArrayEntidad(Entidad* array,int limite);
+int entidad_modificarArrayEntidad(Entidad* array,int limite);
+int entidad_bajaArrayEntidad(Entidad* array,int limite);
+int entidad_buscarIdEntidad(Entidad* array, int limite, int valorBuscado);
 int entidad_getEmptyIndexEntidad(Entidad* array,int limite);
 int entidad_ordenarEntidadID(Entidad* array,int limite);
 int entidad_mocksEntidad(Entidad* array,int limite, int indice, int* id,char* nombre,char* apellido, char* cuit, float precio, int sector);
-int entidad_imprimirUltimoEntidadCargado(Entidad array[], int limite, int idEntidad);
-int entidad_buscarCuitEntidad(Entidad array[], int limite, char valorBuscado);
-int ordenarEntidadDobleCriterio(Entidad* list, int len, int order);
+int entidad_ordenarEntidadDobleCriterio(Entidad* list, int len, int order);
 
 #endif /* FANTASMA_H_ */

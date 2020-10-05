@@ -54,9 +54,10 @@ int entidad_imprimirArrayEntidad(Entidad* array,int limite)
 	int i;
 	if(array != NULL && limite > 0)
 	{
+		entidad_ordenarEntidadID(array,limite);
 		for(i=0;i<limite;i++)
 		{
-			entidad_imprimirEntidad(array);
+			entidad_imprimirEntidad(&array[i]);
 		}
 		ret = 0;
 	}
@@ -68,7 +69,6 @@ int entidad_imprimirArrayEntidad(Entidad* array,int limite)
  * \param array Array de Entidad a ser actualizado
  * \param limite Limite del array de Entidad
  * \return Retorna 0 (EXITO) y -1 (ERROR)
- *
  */
 int entidad_inicializarArrayEntidad(Entidad* array,int limite)
 {
@@ -89,27 +89,33 @@ int entidad_inicializarArrayEntidad(Entidad* array,int limite)
  * \brief Da de alta un Entidad en una posicion del array
  * \param array Array de Entidad a ser actualizado
  * \param limite Limite del array de Entidad
- * \param indice Posicion a ser actualizada
- * \param id Identificador a ser asignado al Entidad
  * \return Retorna 0 (EXITO) y -1 (ERROR)
- *
  */
-int entidad_altaArrayEntidad(Entidad* array,int limite, int indice)
+int entidad_altaArrayEntidad(Entidad* array,int limite)
 {
 	int ret = -1;
 	Entidad bufferEntidad;
-	if(array != NULL && limite > 0 && indice < limite && indice >= 0)
+	int auxIndice;
+	if(array != NULL && limite > 0)
 	{
-		if( !utn_getNombre(bufferEntidad.nombre,LENGTH_NOMBRE,"Ingrese su Nombre: ","ERROR, nombre invalido.\n",QTY_REINT) &&
-			!utn_getApellido(bufferEntidad.apellido,LENGTH_APELLIDO,"Ingrese su apellido: ","ERROR, apellido invalido.\n",QTY_REINT) &&
-			!utn_getCuit(bufferEntidad.cuit,LENGTH_CUIT,"Ingrese su Cuit [xx-xxxxxxxx-x]: ", "ERROR, cuit invalido.\n",QTY_REINT) &&
-			!utn_getNumeroFlotante(&bufferEntidad.precio, "Ingrese el precio: ", "ERROR\n",0,999,QTY_REINT) &&
-			!utn_getNumero(&bufferEntidad.sector,"Ingrese el sector: ","ERROR\n",1,99,QTY_REINT))
+		auxIndice = entidad_getEmptyIndexEntidad(array,limite);
+		if(auxIndice>=0)
 		{
-			bufferEntidad.id = entidad_generarNuevoId();
-			bufferEntidad.isEmpty = FALSE;
-			array[indice] = bufferEntidad;
-			ret = 0;
+			if( !utn_getNombre(bufferEntidad.nombre,LENGTH_NOMBRE,"Ingrese su Nombre: ","ERROR, nombre invalido.\n",QTY_REINT) &&
+				!utn_getApellido(bufferEntidad.apellido,LENGTH_APELLIDO,"Ingrese su apellido: ","ERROR, apellido invalido.\n",QTY_REINT) &&
+				!utn_getCuit(bufferEntidad.cuit,LENGTH_CUIT,"Ingrese su Cuit [xx-xxxxxxxx-x]: ", "ERROR, cuit invalido.\n",QTY_REINT) &&
+				!utn_getNumeroFlotante(&bufferEntidad.precio, "Ingrese el precio: ", "ERROR",0,999,QTY_REINT) &&
+				!utn_getNumero(&bufferEntidad.sector,"Ingrese el sector: ","ERROR",1,99,QTY_REINT))
+			{
+				bufferEntidad.id = entidad_generarNuevoId();
+				bufferEntidad.isEmpty = FALSE;
+				array[auxIndice] = bufferEntidad;
+				ret = 0;
+			}
+			else
+			{
+				printf("No hay lugares vacios en el Array.\n");
+			}
 		}
 	}
 	return ret;
@@ -119,27 +125,36 @@ int entidad_altaArrayEntidad(Entidad* array,int limite, int indice)
  * \brief Actualiza los datos de un Entidad en una posicion del array
  * \param array Array de Entidad a ser actualizado
  * \param limite Limite del array de Entidad
- * \param indice Posicion a ser actualizada
  * \return Retorna 0 (EXITO) y -1 (ERROR)
- *
  */
-int entidad_modificarArrayEntidad(Entidad* array,int limite, int indice)
+int entidad_modificarArrayEntidad(Entidad* array,int limite)
 {
 	int ret = -1;
 	Entidad bufferEntidad;
-
-	if(array != NULL && limite > 0 && indice < limite && indice >= 0 && array[indice].isEmpty == FALSE)
+	int auxIndice;
+	int auxID;
+	if(array != NULL && limite > 0)
 	{
-		if(	!utn_getNombre(bufferEntidad.nombre,LENGTH_NOMBRE,"Ingrese nuevo Nombre: ","ERROR, nombre invalido.\n",QTY_REINT) &&
-			!utn_getApellido(bufferEntidad.apellido,LENGTH_APELLIDO,"Ingrese nuevo apellido: ","ERROR, apellido invalido.\n",QTY_REINT) &&
-			!utn_getCuit(bufferEntidad.cuit,LENGTH_CUIT,"Ingrese nuevo Cuit [xx-xxxxxxxx-x]: ", "ERROR, cuit invalido.\n",QTY_REINT) &&
-			!utn_getNumeroFlotante(&bufferEntidad.precio,"Ingrese el nuevo precio: ","ERROR\n",0,999,QTY_REINT) &&
-			!utn_getNumero(&bufferEntidad.sector,"Ingrese nuevo sector: ","ERROR\n",0,99,QTY_REINT))
+		entidad_imprimirArrayEntidad(array, limite);
+		utn_getNumero(&auxID,"\nIngresa el ID de la pantalla a modificar: ","ERROR",0,999,QTY_REINT);
+		auxIndice = entidad_buscarIdEntidad(array, limite, auxID);
+		if(auxIndice>=0)
 		{
-			bufferEntidad.id = array[indice].id;
-			bufferEntidad.isEmpty = 0;
-			array[indice] = bufferEntidad;
-			ret = 0;
+			if(	!utn_getNombre(bufferEntidad.nombre,LENGTH_NOMBRE,"Ingrese nuevo Nombre: ","ERROR, nombre invalido.\n",QTY_REINT) &&
+				!utn_getApellido(bufferEntidad.apellido,LENGTH_APELLIDO,"Ingrese nuevo apellido: ","ERROR, apellido invalido.\n",QTY_REINT) &&
+				!utn_getCuit(bufferEntidad.cuit,LENGTH_CUIT,"Ingrese nuevo Cuit [xx-xxxxxxxx-x]: ", "ERROR, cuit invalido.\n",QTY_REINT) &&
+				!utn_getNumeroFlotante(&bufferEntidad.precio,"Ingrese el nuevo precio: ","ERROR",0,999,QTY_REINT) &&
+				!utn_getNumero(&bufferEntidad.sector,"Ingrese nuevo sector: ","ERROR",0,99,QTY_REINT))
+			{
+				bufferEntidad.id = array[auxIndice].id;
+				bufferEntidad.isEmpty = 0;
+				array[auxIndice] = bufferEntidad;
+				ret = 0;
+			}
+		}
+		else
+		{
+			printf("No se encontro el ID ingresado.\n");
 		}
 	}
 	return ret;
@@ -149,16 +164,27 @@ int entidad_modificarArrayEntidad(Entidad* array,int limite, int indice)
  * \brief Actualiza una posicion del array
  * \param array Array de Entidad a ser actualizado
  * \param limite Limite del array de Entidad
- * \param indice Posicion a ser actualizada
  * \return Retorna 0 (EXITO) y -1 (ERROR)
  */
-int entidad_bajaArrayEntidad(Entidad* array,int limite, int indice)
+int entidad_bajaArrayEntidad(Entidad* array,int limite)
 {
 	int ret = -1;
-	if(array != NULL && limite > 0 && indice < limite && indice >= 0 && array[indice].isEmpty == FALSE)
+	int auxIndice;
+	int auxID;
+	if(array != NULL && limite > 0)
 	{
-		array[indice].isEmpty = TRUE;
-		ret = 0;
+		entidad_imprimirArrayEntidad(array, limite);
+		utn_getNumero(&auxID,"\nIngresa el ID de la pantalla a borrar: ","ERROR",0,999,QTY_REINT);
+		auxIndice = entidad_buscarIdEntidad(array, limite, auxID);
+		if(auxIndice>=0)
+		{
+			array[auxIndice].isEmpty = TRUE;
+			ret = 0;
+		}
+		else
+		{
+			printf("No se encontro el ID ingresado.\n");
+		}
 	}
 	return ret;
 }
@@ -182,30 +208,6 @@ int entidad_buscarIdEntidad(Entidad* array, int limite, int valorBuscado)
 			{
 				ret = i;
 				break;
-			}
-		}
-	}
-	return ret;
-}
-
-/**
-* \brief Imprime la ultima Entidad cargada
-* \param array Entidad Array de Entidad
-* \param limite int Tamaño del array
-* \param El id de la Entidad
-* \return int Return (-1) ERROR y 0 si esta OK.
-*/
-int entidad_imprimirUltimoEntidadCargado(Entidad* array, int limite, int idEntidad)
-{
-	int ret = -1;
-	int i;
-	if(array != NULL && limite > 0 && idEntidad >= 0)
-	{
-		for(i=0;i<limite;i++)
-		{
-			if(array[i].id == (idEntidad-1))
-			{
-				entidad_imprimirEntidad(array);
 			}
 		}
 	}
@@ -280,7 +282,7 @@ int entidad_ordenarEntidadID(Entidad* array,int limite)
  * \param orden int [1]-Indica ascendente - [0]-Indica Descendente
  * \return Retorna el incice de la posicion vacia y -1 (ERROR)
  */
-int ordenarEntidadDobleCriterio(Entidad* list, int len, int order)
+int entidad_ordenarEntidadDobleCriterio(Entidad* list, int len, int order)
 {
 	int ret=-1;
 	int flagSwap;
