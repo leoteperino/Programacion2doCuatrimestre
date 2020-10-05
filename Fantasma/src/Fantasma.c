@@ -323,11 +323,11 @@ int entidad_ordenarEntidadDobleCriterio(Entidad* list, int len, int order)
  * \param id Identificador a ser asignado a la Entidad
  * \return Retorna 0 (EXITO) y -1 (ERROR)
  */
-int entidad_mocksEntidad(Entidad* array,int limite, int indice, int* id,char* nombre,char* apellido, char* cuit, float precio, int sector)
+int entidad_mocksEntidad(Entidad* array,int limite, int indice, int id,char* nombre,char* apellido, char* cuit, float precio, int sector)
 {
 	int ret = -1;
 	Entidad bufferEntidad;
-	if(array != NULL && limite > 0 && indice < limite && indice >= 0 && id != NULL)
+	if(array != NULL && limite > 0 && indice < limite && indice >= 0)
 	{
 		    bufferEntidad.id = entidad_generarNuevoId();
 			strncpy(bufferEntidad.nombre,nombre,LENGTH_NOMBRE);

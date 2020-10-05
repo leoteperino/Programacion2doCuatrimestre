@@ -28,7 +28,7 @@ int entidad_bajaArrayEntidad(Entidad* array,int limite);
 int entidad_buscarIdEntidad(Entidad* array, int limite, int valorBuscado);
 int entidad_getEmptyIndexEntidad(Entidad* array,int limite);
 int entidad_ordenarEntidadID(Entidad* array,int limite);
-int entidad_mocksEntidad(Entidad* array,int limite, int indice, int* id,char* nombre,char* apellido, char* cuit, float precio, int sector);
+int entidad_mocksEntidad(Entidad* array,int limite, int indice, int id,char* nombre,char* apellido, char* cuit, float precio, int sector);
 int entidad_ordenarEntidadDobleCriterio(Entidad* list, int len, int order);
 
 #endif /* FANTASMA_H_ */
