@@ -18,6 +18,8 @@ int main(void) {
 	entidad_mocksEntidad(entidades, LENGTH_ENTIDAD, 2, id, "Entidad3", "Apellido3", "00-00000000-0",1,3);
 	entidad_mocksEntidad(entidades, LENGTH_ENTIDAD, 3, id, "Entidad4", "Apellido4", "00-00000000-0",1,5);
 	entidad_mocksEntidad(entidades, LENGTH_ENTIDAD, 4, id, "Entidad5", "Apellido5", "00-00000000-0",1,8);
+	//imprimir fantasma
+	entidad_imprimirArrayEntidad(entidades, LENGTH_ENTIDAD);
 	//Menu Principal
 	do
 	{

@@ -171,6 +171,7 @@ int entidad_bajaArrayEntidad(Entidad* array,int limite)
 	int ret = -1;
 	int auxIndice;
 	int auxID;
+	char auxChar;
 	if(array != NULL && limite > 0)
 	{
 		entidad_imprimirArrayEntidad(array, limite);
@@ -178,8 +179,22 @@ int entidad_bajaArrayEntidad(Entidad* array,int limite)
 		auxIndice = entidad_buscarIdEntidad(array, limite, auxID);
 		if(auxIndice>=0)
 		{
-			array[auxIndice].isEmpty = TRUE;
-			ret = 0;
+			if(!utn_getCaracterSN(&auxChar,ARRAY_LEN_CHAR,
+								  "Esta seguro que desea borrar esta Pantalla?[S/N]:",
+								  "ERROR\n",QTY_REINT))
+			{
+				switch(auxChar)
+				{
+					 case 'S':
+					 case 's':
+						 array[auxIndice].isEmpty = TRUE;
+						 ret = 0;
+						break;
+					 case 'N':
+					 case 'n':
+						 break;
+				}
+			}
 		}
 		else
 		{
@@ -311,6 +326,34 @@ int entidad_ordenarEntidadDobleCriterio(Entidad* list, int len, int order)
 			}
 			len--;
 		}while(flagSwap);
+	}
+	return ret;
+}
+
+/**
+ * \brief Chequea que la lista de Entidades este cargada
+ * \param array Array de Entidades a ser actualizado
+ * \param int len longitud del array de entidades
+ * \return Retorna 0, si la lista esta con al menos 1 entidad y -1 si la lista esta vacia.
+ */
+int entidad_checkListaVacia(Entidad* list, int len)
+{
+	int ret=-1;
+	int contador = 0;
+	int i;
+	if(list!=NULL && len>0)
+	{
+		for(i=0;i<len;i++)
+		{
+			if(list[i].isEmpty==FALSE)
+			{
+				contador++;
+			}
+		}
+		if(contador>0)
+		{
+			ret=0;
+		}
 	}
 	return ret;
 }

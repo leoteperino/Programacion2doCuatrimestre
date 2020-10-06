@@ -34,5 +34,6 @@ int entidad_getEmptyIndexEntidad(Entidad* array,int limite);
 int entidad_ordenarEntidadID(Entidad* array,int limite);
 int entidad_mocksEntidad(Entidad* array,int limite, int indice, int id,char* nombre,char* apellido, char* cuit, float precio, int sector);
 int entidad_ordenarEntidadDobleCriterio(Entidad* list, int len, int order);
+int entidad_checkListaVacia(Entidad* list, int len);
 
 #endif /* FANTASMA_H_ */
