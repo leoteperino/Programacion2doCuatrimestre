@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio_ext.h>
-#include "Contratacion.h"
 #include "utn.h"
 #include "Pantalla.h"
+#include "Contratacion.h"
 
 static int cont_generarNuevoId (void);
 
@@ -90,7 +90,7 @@ int cont_inicializarArrayContratacion(Contratacion* array,int limite)
  * \param limite Limite del array de Contratacion
  * \return Retorna 0 (EXITO) y -1 (ERROR)
  */
-int cont_altaArrayContratacion(Contratacion* array,int limite)
+int cont_altaArrayContratacion(Contratacion* array,int limite, int idPantalla)
 {
 	int ret = -1;
 	Contratacion bufferContratacion;
@@ -102,11 +102,11 @@ int cont_altaArrayContratacion(Contratacion* array,int limite)
 		{
 			if( !utn_getCuit(bufferContratacion.cuitCliente,LENGTH_CUIT,"Ingrese Cuit del Cliente [xx-xxxxxxxx-x]: ", "ERROR, cuit invalido.\n",QTY_REINT) &&
 				!utn_getNumero(&bufferContratacion.dias,"Ingrese cantidad de dias a contratar: ","ERROR",MIN_DIAS,MAX_DIAS,QTY_REINT) &&
-				!utn_getTexto(bufferContratacion.nombreArchivo, LENGTH_ARCHIVO, "Ingrese el nombre del archivo: ", "ERROR", QTY_REINT) &&
-				!utn_getNumero(&bufferContratacion.idPantalla,"Ingrese el ID de la pantalla a contratar: ","ERROR",MIN_ID,MAX_ID,QTY_REINT))
+				!utn_getTexto(bufferContratacion.nombreArchivo, LENGTH_ARCHIVO, "Ingrese el nombre del archivo: ", "ERROR", QTY_REINT))
 			{
 				bufferContratacion.id = cont_generarNuevoId();
 				bufferContratacion.isEmpty = FALSE;
+				bufferContratacion.idPantalla = idPantalla;
 				array[auxIndice] = bufferContratacion;
 				ret = 0;
 			}
@@ -125,33 +125,21 @@ int cont_altaArrayContratacion(Contratacion* array,int limite)
  * \param limite Limite del array de Contratacion
  * \return Retorna 0 (EXITO) y -1 (ERROR)
  */
-int cont_modificarArrayContratacion(Contratacion* array,int limite)
+int cont_modificarArrayContratacion(Contratacion* array,int limite, int indice)
 {
 	int ret = -1;
 	Contratacion bufferContratacion;
-	int auxIndice;
-	int auxID;
 	if(array != NULL && limite > 0)
 	{
-		cont_imprimirArrayContratacion(array, limite);
-		utn_getNumero(&auxID,"\nIngresa el ID de la pantalla a modificar: ","ERROR",0,999,QTY_REINT);
-		auxIndice = cont_buscarIdContratacion(array, limite, auxID);
-		if(auxIndice>=0)
+		if(	!utn_getNumero(&bufferContratacion.dias,"Ingrese nueva cantidad de dias a contratar: ","ERROR",MIN_DIAS,MAX_DIAS,QTY_REINT))
 		{
-			if(	!utn_getCuit(bufferContratacion.cuitCliente,LENGTH_CUIT,"Ingrese nuevo Cuit del Cliente [xx-xxxxxxxx-x]: ", "ERROR, cuit invalido.\n",QTY_REINT) &&
-				!utn_getNumero(&bufferContratacion.dias,"Ingrese nueva cantidad de dias a contratar: ","ERROR",MIN_DIAS,MAX_DIAS,QTY_REINT) &&
-				!utn_getTexto(bufferContratacion.nombreArchivo, LENGTH_ARCHIVO, "Ingrese nuevo nombre del archivo: ", "ERROR", QTY_REINT) &&
-				!utn_getNumero(&bufferContratacion.idPantalla,"Ingrese el ID de la nueva pantalla a contratar: ","ERROR",MIN_ID,MAX_ID,QTY_REINT))
-			{
-				bufferContratacion.id = array[auxIndice].id;
-				bufferContratacion.isEmpty = 0;
-				array[auxIndice] = bufferContratacion;
-				ret = 0;
-			}
-		}
-		else
-		{
-			printf("No se encontro el ID ingresado.\n");
+			bufferContratacion.id = array[indice].id;
+			bufferContratacion.isEmpty = 0;
+			strncpy(bufferContratacion.nombreArchivo,array[indice].nombreArchivo,LENGTH_ARCHIVO);
+			bufferContratacion.idPantalla = array[indice].idPantalla;
+			strncpy(bufferContratacion.cuitCliente,array[indice].cuitCliente,LENGTH_CUIT);
+			array[indice] = bufferContratacion;
+			ret = 0;
 		}
 	}
 	return ret;
@@ -163,44 +151,24 @@ int cont_modificarArrayContratacion(Contratacion* array,int limite)
  * \param limite Limite del array de Contratacion
  * \return Retorna 0 (EXITO) y -1 (ERROR)
  */
-int cont_bajaArrayContratacion(Contratacion* array,int limite)
+int cont_bajaArrayContratacion(Contratacion* arrayCont,int limiteCont,Pantalla* arrayPan,int limitePan,int idPantalla)
 {
-	int ret = -1;
-	int auxIndice;
-	int auxID;
-	char auxChar;
-	if(array != NULL && limite > 0)
+	int retorno = -1;
+	int i;
+	if(arrayCont != NULL && limiteCont > 0 && arrayPan != NULL && limitePan > 0)
 	{
-		cont_imprimirArrayContratacion(array, limite);
-		utn_getNumero(&auxID,"\nIngresa el ID de la contratacion a borrar: ","ERROR",MIN_ID,MAX_ID,QTY_REINT);
-		auxIndice = cont_buscarIdContratacion(array, limite, auxID);
-		if(auxIndice>=0)
+		for(i=0;i<limitePan;i++)
 		{
-
-			if(!utn_getCaracterSN(&auxChar,ARRAY_LEN_CHAR,
-								  "Esta seguro que desea borrar esta Contratacion?[S/N]:",
-								  "ERROR\n",QTY_REINT))
+			if((arrayCont[i].isEmpty == FALSE) && (arrayCont[i].idPantalla == idPantalla))
 			{
-				switch(auxChar)
-				{
-					 case 'S':
-					 case 's':
-						 array[auxIndice].isEmpty = TRUE;
-						 ret = 0;
-						break;
-					 case 'N':
-					 case 'n':
-						 break;
-				}
+				arrayCont[i].isEmpty = TRUE;
+				retorno = 0;
 			}
 		}
-		else
-		{
-			printf("No se encontro el ID ingresado.\n");
-		}
 	}
-	return ret;
+	return retorno;
 }
+
 
 /**
 * \brief Busca un ID en un array y devuelve la posicion en que se encuentra
@@ -383,12 +351,186 @@ int cont_mocksContratacion(Contratacion* array,int limite, int indice, int id,ch
 }
 
 
+int cont_listarPantallasContratadas(Contratacion* arrayCont,int limiteCont,Pantalla* arrayPan,int limitePan,int idPantalla)
+{
+	int retorno = -1;
+	int i;
+	int auxIndice;
+	int contPantalla = 0;
+	if(arrayCont != NULL && limiteCont > 0 && arrayPan != NULL && limitePan > 0)
+	{
+		for(i=0;i<limitePan;i++)
+		{
+			if((arrayCont[i].isEmpty == FALSE) && (arrayCont[i].idPantalla == idPantalla))
+			{
+				auxIndice = cont_buscarIdContratacion(arrayCont,LENGTH_CONT,idPantalla);
+				printf("Cliente: %s - Pantalla: %d - Precio:%.2f\n",
+						arrayCont[i].cuitCliente,
+						arrayPan[auxIndice].id,
+						arrayPan[i].precio);
+				retorno = 0;
+				contPantalla++;
+			}
+		}
+		if(contPantalla==0)
+		{
+			printf("Esta pantalla no tiene contrataciones.\n");
+		}
+	}
+	return retorno;
+}
+
+int cont_listarClientesPorCuit(Contratacion* arrayCont,int limiteCont,char* cuit)
+{
+	int retorno = -1;
+	int i;
+	if(arrayCont != NULL && limiteCont > 0)
+	{
+		for(i=0;i<limiteCont;i++)
+		{
+			if((arrayCont[i].isEmpty == FALSE))
+			{
+				retorno = 0;
+				if(!strncmp(cuit,arrayCont[i].cuitCliente,LENGTH_CUIT))
+				{
+					printf("Cliente: %s - Pantalla Contratada: %d - Dias contratados: %d - Archivo: %s\n",
+							arrayCont[i].cuitCliente,
+							arrayCont[i].idPantalla,
+							arrayCont[i].dias,
+							arrayCont[i].nombreArchivo);
+				}
+			}
+		}
+	}
+	return retorno;
+}
+
+int cont_bajaArrayContratacionID(Contratacion* array,int limite,int indice)
+{
+	int retorno = -1;
+	char auxChar;
+	if(array != NULL && limite > 0)
+	{
+		if(!utn_getCaracterSN(&auxChar,ARRAY_LEN_CHAR,
+							  "Esta seguro que desea borrar esta Contratacion?[S/N]:",
+							  "ERROR\n",QTY_REINT))
+		{
+			switch(auxChar)
+			{
+				 case 'S':
+				 case 's':
+					 array[indice].isEmpty = TRUE;
+					 retorno = 0;
+					break;
+				 case 'N':
+				 case 'n':
+					 break;
+			}
+		}
+
+	}
+	return retorno;
+}
+
+int cont_consultarFacturacion(Contratacion* arrayCont,int limiteCont,Pantalla* arrayPan,int limitePan,char* cuit)
+{
+	int retorno = -1;
+	int i;
+	int auxIndice;
+	float precioFinal;
+	if(arrayCont != NULL && limiteCont > 0 && arrayPan != NULL && limitePan > 0)
+	{
+		for(i=0;i<limitePan;i++)
+		{
+			if((arrayCont[i].isEmpty == FALSE) && !strncmp(arrayCont[i].cuitCliente,cuit,LENGTH_CUIT))
+			{
+				auxIndice = pan_buscarIdPantalla(arrayPan, LENGTH_PANTALLA, arrayCont[i].idPantalla);
+
+				printf("Cliente: %s - Pantalla: %d - Dias contratados: %d - Precio x dia: %.2f - Precio Final:%.2f\n",
+						arrayCont[i].cuitCliente,
+						arrayCont[i].idPantalla,
+						arrayCont[i].dias,
+						arrayPan[auxIndice].precio,
+						precioFinal=(float)arrayCont[i].dias * arrayPan[auxIndice].precio);
+				retorno=0;
+			}
+		}
+	}
+	return retorno;
+}
+
+int cont_listarContrataciones(Contratacion* arrayCont,int limiteCont,Pantalla* arrayPan,int limitePan)
+{
+	int retorno = -1;
+	int i;
+	int auxIndice;
+	if(arrayCont != NULL && limiteCont > 0 && arrayPan != NULL && limitePan > 0)
+	{
+		for(i=0;i<limitePan;i++)
+		{
+			if((arrayCont[i].isEmpty == FALSE))
+			{
+				auxIndice = pan_buscarIdPantalla(arrayPan, LENGTH_PANTALLA, arrayCont[i].idPantalla);
+				printf("Nombnre de la Pantalla: %s - Nombre de Video: %s - Dias contratados: %d - Cuit: %s\n",
+						arrayPan[auxIndice].nombre,
+						arrayCont[i].nombreArchivo,
+						arrayCont[i].dias,
+						arrayCont[i].cuitCliente);
+				retorno=0;
+			}
+		}
+	}
+	return retorno;
+}
+
+int cont_listarClientes(Contratacion* arrayCont,int limiteCont,Pantalla* arrayPan,int limitePan)
+{
+	int retorno = -1;
+	int i;
+	int auxIndice;
+	int cont = 0;
+	int flagSwap;
+	if(arrayCont != NULL && limiteCont > 0 && arrayPan != NULL && limitePan > 0)
+	{
+		do
+		{
+			flagSwap = 0;
+			for(i=0;i<limiteCont-1;i++)
+			{
+				if(arrayCont[i].isEmpty == FALSE)
+				{
+					if(strncmp(arrayCont[i].cuitCliente,arrayCont[i+1].cuitCliente,LENGTH_CUIT))
+					{
+						flagSwap = 1;
+						cont++;
+					}
+				}
+			}
+			limiteCont--;
+		}while(flagSwap);
+		printf("\n%d\n", cont);
+	}
+	return retorno;
+}
 
 
-
-
-
-
+int cont_buscarContratacionChar(Contratacion* array, int limite, char* valorBuscado)
+{
+	int ret = -1;
+	int i;
+	if(array != NULL && limite > 0 && valorBuscado >= 0)
+	{
+		for(i=0;i<limite;i++)
+		{
+			if(array[i].isEmpty==FALSE && array[i].cuitCliente == valorBuscado)
+			{
+				ret = i;
+				break;
+			}
+		}
+	}
+	return ret;
+}
 
 
 

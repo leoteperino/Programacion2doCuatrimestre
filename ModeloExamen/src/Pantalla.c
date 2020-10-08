@@ -109,7 +109,7 @@ int pan_altaArrayPantalla(Pantalla* array,int limite)
 		auxIndice = pan_getEmptyIndexPantalla(array,limite);
 		if(auxIndice>=0)
 		{
-			if( !utn_getNumero(&bufferPantalla.tipo,"Ingrese el tipo de pantalla [1-LED/2-LCD]: ","ERROR",MIN_TIPO,MAX_TIPO,QTY_REINT) &&
+			if( !utn_getNumero(&bufferPantalla.tipo,"Ingrese el tipo de pantalla [1-LCD/2-LED]: ","ERROR",MIN_TIPO,MAX_TIPO,QTY_REINT) &&
 				!utn_getNombre(bufferPantalla.nombre,LENGTH_NOMBRE,"Ingrese el Nombre de la pantalla: ","ERROR, nombre invalido.\n",QTY_REINT) &&
 				!utn_getTexto(bufferPantalla.direccion, LENGTH_DIRECCION,"Ingrese la direccion: ", "ERROR", QTY_REINT) &&
 				!utn_getNumeroFlotante(&bufferPantalla.precio, "Ingrese el precio: ", "ERROR",MIN_PRECIO,MAX_PRECIO,QTY_REINT))
@@ -134,29 +134,21 @@ int pan_altaArrayPantalla(Pantalla* array,int limite)
  * \param limite Limite del array de Pantalla
  * \return Retorna 0 (EXITO) y -1 (ERROR)
  */
-int pan_modificarArrayPantalla(Pantalla* array,int limite)
+int pan_modificarArrayPantalla(Pantalla* array,int limite, int indice)
 {
 	int ret = -1;
 	Pantalla bufferPantalla;
-	int auxIndice;
-	int auxID;
 	if(array != NULL && limite > 0)
 	{
-		pan_imprimirArrayPantalla(array, limite);
-		utn_getNumero(&auxID,"\nIngresa el ID de la pantalla a modificar: ","ERROR",0,999,QTY_REINT);
-		auxIndice = pan_buscarIdPantalla(array, limite, auxID);
-		if(auxIndice>=0)
+		if(	!utn_getNumero(&bufferPantalla.tipo,"Ingrese nuevo tipo de pantalla [1-LED/2-LCD]: ","ERROR",MIN_TIPO,MAX_TIPO,QTY_REINT) &&
+			!utn_getNombre(bufferPantalla.nombre,LENGTH_NOMBRE,"Ingrese nuevo Nombre de la pantalla: ","ERROR, nombre invalido.\n",QTY_REINT) &&
+			!utn_getTexto(bufferPantalla.direccion, LENGTH_DIRECCION,"Ingrese nueva direccion: ", "ERROR", QTY_REINT) &&
+			!utn_getNumeroFlotante(&bufferPantalla.precio, "Ingrese nuevo precio: ", "ERROR",MIN_PRECIO,MAX_PRECIO,QTY_REINT))
 		{
-			if(	!utn_getNumero(&bufferPantalla.tipo,"Ingrese nuevo tipo de pantalla [1-LED/2-LCD]: ","ERROR",MIN_TIPO,MAX_TIPO,QTY_REINT) &&
-				!utn_getNombre(bufferPantalla.nombre,LENGTH_NOMBRE,"Ingrese nuevo Nombre de la pantalla: ","ERROR, nombre invalido.\n",QTY_REINT) &&
-				!utn_getTexto(bufferPantalla.direccion, LENGTH_DIRECCION,"Ingrese nueva direccion: ", "ERROR", QTY_REINT) &&
-				!utn_getNumeroFlotante(&bufferPantalla.precio, "Ingrese nuevo precio: ", "ERROR",MIN_PRECIO,MAX_PRECIO,QTY_REINT))
-			{
-				bufferPantalla.id = array[auxIndice].id;
-				bufferPantalla.isEmpty = 0;
-				array[auxIndice] = bufferPantalla;
-				ret = 0;
-			}
+			bufferPantalla.id = array[indice].id;
+			bufferPantalla.isEmpty = 0;
+			array[indice] = bufferPantalla;
+			ret = 0;
 		}
 		else
 		{
@@ -172,39 +164,27 @@ int pan_modificarArrayPantalla(Pantalla* array,int limite)
  * \param limite Limite del array de Pantalla
  * \return Retorna 0 (EXITO) y -1 (ERROR)
  */
-int pan_bajaArrayPantalla(Pantalla* array,int limite)
+int pan_bajaArrayPantalla(Pantalla* array,int limite,int indice)
 {
 	int ret = -1;
-	int auxIndice;
-	int auxID;
 	char auxChar;
 	if(array != NULL && limite > 0)
 	{
-		pan_imprimirArrayPantalla(array, limite);
-		utn_getNumero(&auxID,"\nIngresa el ID de la pantalla a borrar: ","ERROR",MIN_ID,MAX_ID,QTY_REINT);
-		auxIndice = pan_buscarIdPantalla(array, limite, auxID);
-		if(auxIndice>=0)
+		if(!utn_getCaracterSN(&auxChar,ARRAY_LEN_CHAR,
+							  "Esta seguro que desea borrar esta Pantalla?[S/N]:",
+							  "ERROR\n",QTY_REINT))
 		{
-			if(!utn_getCaracterSN(&auxChar,ARRAY_LEN_CHAR,
-								  "Esta seguro que desea borrar esta Pantalla?[S/N]:",
-								  "ERROR\n",QTY_REINT))
+			switch(auxChar)
 			{
-				switch(auxChar)
-				{
-					 case 'S':
-					 case 's':
-						 array[auxIndice].isEmpty = TRUE;
-						 ret = 0;
-						break;
-					 case 'N':
-					 case 'n':
-						 break;
-				}
+				 case 'S':
+				 case 's':
+					 array[indice].isEmpty = TRUE;
+					 ret = 0;
+					break;
+				 case 'N':
+				 case 'n':
+					 break;
 			}
-		}
-		else
-		{
-			printf("No se encontro el ID ingresado.\n");
 		}
 	}
 	return ret;
