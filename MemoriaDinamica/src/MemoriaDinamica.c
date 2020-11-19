@@ -79,6 +79,7 @@ int main(void) {
 		if(!initArray(pArrayEdades, sizeArrayEdades, 0))
 		{
 			printf("INIT OK\n");
+			printf("%p", pArrayEdades);
 			imprimirArray(pArrayEdades, sizeArrayEdades);
 		}
 
